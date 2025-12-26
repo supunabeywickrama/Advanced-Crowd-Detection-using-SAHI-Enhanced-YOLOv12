@@ -89,64 +89,7 @@ Copy code
 
 ---
 
-## ⚙️ Installation
 
-```bash
-pip install ultralytics sahi opencv-python
-▶️ Usage
-Load YOLOv12 Model with SAHI
-python
-Copy code
-from sahi.models.ultralytics import UltralyticsDetectionModel
-
-detection_model = UltralyticsDetectionModel(
-    model_path="best.pt",
-    confidence_threshold=0.25,
-    device="cuda"
-)
-Image Inference with SAHI
-python
-Copy code
-from sahi.predict import get_sliced_prediction
-
-result = get_sliced_prediction(
-    image="crowd.jpg",
-    detection_model=detection_model,
-    slice_height=512,
-    slice_width=512,
-    overlap_height_ratio=0.3,
-    overlap_width_ratio=0.3
-)
-
-print("People count:", len(result.object_prediction_list))
-Video Inference with SAHI
-python
-Copy code
-import cv2
-from sahi.predict import get_sliced_prediction
-
-cap = cv2.VideoCapture("crowd_video.mp4")
-
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        break
-
-    result = get_sliced_prediction(
-        image=frame,
-        detection_model=detection_model,
-        slice_height=512,
-        slice_width=512,
-        overlap_height_ratio=0.3,
-        overlap_width_ratio=0.3
-    )
-
-    for obj in result.object_prediction_list:
-        x1, y1, x2, y2 = map(int, obj.bbox.to_xyxy())
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-
-    # write frame to output video
----
 ## 📊 Results
 
 - 📈 Improved recall for small and distant people  
@@ -171,10 +114,9 @@ while cap.isOpened():
 
 This project is released under the **Apache 2.0 License**, allowing free use for academic and commercial purposes.
 
+---
 
-##🙌 Acknowledgements
-Ultralytics YOLO
-
-SAHI (Slicing Aided Hyper Inference)
-
-Open-source computer vision community
+## 🙌 Acknowledgements
+- Ultralytics YOLO
+- SAHI (Slicing Aided Hyper Inference)
+- Open-source computer vision community
